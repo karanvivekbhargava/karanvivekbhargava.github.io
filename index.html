@@ -51,6 +51,7 @@
             font-size: 0.95rem;
             color: var(--text);
             text-decoration: none;
+            cursor: pointer;
         }
 
         nav .nav-links {
@@ -63,9 +64,11 @@
             text-decoration: none;
             font-size: 0.85rem;
             transition: color 0.2s;
+            cursor: pointer;
         }
 
         nav .nav-links a:hover { color: var(--accent); }
+        nav .nav-links a.active { color: var(--accent); }
 
         .container {
             max-width: 720px;
@@ -142,6 +145,9 @@
             color: var(--bg);
         }
 
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
         section {
             margin-bottom: 64px;
         }
@@ -201,6 +207,11 @@
             margin-bottom: 2px;
         }
 
+        .timeline-tenure {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
         .timeline-role {
             font-size: 1.05rem;
             font-weight: 600;
@@ -217,6 +228,47 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             line-height: 1.65;
+        }
+
+        .timeline-prior {
+            margin-top: 20px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .timeline-prior::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .timeline-prior-item {
+            position: relative;
+            margin-bottom: 20px;
+            padding-top: 4px;
+        }
+
+        .timeline-prior-item:last-child { margin-bottom: 0; }
+
+        .timeline-prior-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 8px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--border);
+            border: 2px solid var(--bg);
+        }
+
+        .timeline-prior-item .timeline-role {
+            font-size: 1.05rem;
+            font-weight: 600;
         }
 
         .timeline-desc ul {
@@ -271,6 +323,41 @@
             color: var(--accent);
         }
 
+        .patent-item {
+            margin-bottom: 28px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface);
+            transition: border-color 0.2s;
+        }
+
+        .patent-item:hover { border-color: var(--accent); }
+        .patent-item:last-child { margin-bottom: 0; }
+
+        .patent-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .patent-title:hover { color: var(--accent); }
+
+        .patent-meta {
+            font-size: 0.82rem;
+            color: var(--accent);
+            margin-top: 4px;
+            margin-bottom: 8px;
+        }
+
+        .patent-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
         .placeholder-section {
             padding: 40px;
             border: 1px dashed var(--border);
@@ -322,13 +409,13 @@
 <body>
     <nav>
         <div class="nav-inner">
-            <a href="#" class="nav-name">KB</a>
+            <a class="nav-name" data-tab="home">Home</a>
             <div class="nav-links">
-                <a href="#experience">Experience</a>
-                <a href="#education">Education</a>
-                <a href="#blog">Blog</a>
-                <a href="#talks">Talks</a>
-                <a href="#publications">Publications</a>
+                <a data-tab="home" data-scroll="experience">Experience</a>
+                <a data-tab="home" data-scroll="education">Education</a>
+                <a data-tab="publications">Publications</a>
+                <a data-tab="blog">Blog</a>
+                <a data-tab="talks">Talks</a>
             </div>
         </div>
     </nav>
@@ -363,131 +450,150 @@
             </div>
         </header>
 
-        <section id="experience">
-            <h2>Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item current">
-                    <div class="timeline-company">Torc Robotics</div>
-                    <div class="timeline-role">Senior Machine Learning Engineer</div>
-                    <div class="timeline-meta">Aug 2023 &ndash; Present &middot; Blacksburg, VA</div>
-                    <div class="timeline-desc">
-                        Creating and deploying ML models for autonomous trucks. Building world models using lidar and camera data for perception and prediction systems.
+        <div id="tab-home" class="tab-content active">
+            <section id="experience">
+                <h2>Experience</h2>
+                <div class="timeline">
+                    <div class="timeline-item current">
+                        <div class="timeline-company">Torc Robotics <span class="timeline-tenure" data-start="2018-07" data-end="present"></span></div>
+                        <div class="timeline-role">Senior Machine Learning Engineer</div>
+                        <div class="timeline-meta">Aug 2023 &ndash; Present &middot; <span data-duration data-start="2023-08" data-end="present"></span> &middot; Blacksburg, VA</div>
+                        <div class="timeline-desc">
+                            Creating and deploying ML models for autonomous trucks. Building world models using lidar and camera data for perception and prediction systems.
+                        </div>
+                        <div class="timeline-prior">
+                            <div class="timeline-prior-item">
+                                <div class="timeline-role">Senior Autonomy Engineer &mdash; Localization</div>
+                                <div class="timeline-meta">Apr 2022 &ndash; Aug 2023 &middot; 1 yr 5 mos</div>
+                                <div class="timeline-desc">
+                                    Led localization systems for autonomous trucking, ensuring precise vehicle positioning for safe highway operation.
+                                </div>
+                            </div>
+                            <div class="timeline-prior-item">
+                                <div class="timeline-role">Software Engineer &mdash; Mapping &amp; Visualization</div>
+                                <div class="timeline-meta">Jul 2018 &ndash; Apr 2022 &middot; 3 yrs 10 mos</div>
+                                <div class="timeline-desc">
+                                    Worked on mapping and localization problems for autonomous vehicles using C++ and Python.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-company">Fraunhofer USA CESE</div>
+                        <div class="timeline-role">Research Scientist</div>
+                        <div class="timeline-meta">Jul 2017 &ndash; Feb 2018 &middot; 8 mos &middot; Maryland</div>
+                        <div class="timeline-desc">
+                            <ul>
+                                <li>Designed vehicle detection systems using YOLOnet with collision prediction via OpenCV and Keras</li>
+                                <li>Developed path planning algorithms for highway lane changing in C++</li>
+                                <li>Modelled factory throughput as an optimization problem in Python</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-company">GreyOrange</div>
+                        <div class="timeline-role">Hardware R&amp;D Engineer</div>
+                        <div class="timeline-meta">May 2015 &ndash; May 2016 &middot; 1 yr 1 mo &middot; Gurugram, India</div>
+                        <div class="timeline-desc">
+                            <ul>
+                                <li>Built a modular charging system from scratch (PCB &amp; assembly), solving static discharge and EMI issues across international deployments</li>
+                                <li>Designed the full harness assembly for the Butler robot platform; reduced harness failure rate from 50% to 5%</li>
+                                <li>Maintained embedded C firmware for charging and power scheduling systems</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <div class="timeline-item">
-                    <div class="timeline-company">Torc Robotics</div>
-                    <div class="timeline-role">Senior Autonomy Engineer &mdash; Localization</div>
-                    <div class="timeline-meta">Apr 2022 &ndash; Aug 2023 &middot; 1 yr 5 mos</div>
-                    <div class="timeline-desc">
-                        Led localization systems for autonomous trucking, ensuring precise vehicle positioning for safe highway operation.
+            <section id="education">
+                <h2>Education</h2>
+                <div class="education-item">
+                    <h3>M.Engg. Robotics</h3>
+                    <div class="school">University of Maryland, College Park</div>
+                    <div class="details">
+                        2016 &ndash; 2018 &middot; GPA: 3.87 / 4.0<br>
+                        Coursework in numerical optimization, robotics control, machine learning, path planning, and perception for autonomous robots.
                     </div>
                 </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-company">Torc Robotics</div>
-                    <div class="timeline-role">Software Engineer &mdash; Mapping &amp; Visualization</div>
-                    <div class="timeline-meta">Jul 2018 &ndash; Apr 2022 &middot; 3 yrs 10 mos</div>
-                    <div class="timeline-desc">
-                        Worked on mapping and localization problems for autonomous vehicles using C++ and Python.
+                <div class="education-item">
+                    <h3>B.E. (Hons) Electronics &amp; Instrumentation</h3>
+                    <div class="school">BITS Pilani</div>
+                    <div class="details">
+                        2011 &ndash; 2015 &middot; First Division<br>
+                        Focus on electro-mechanical systems, control systems, robot manipulation, and joint control of robotic arms.
                     </div>
                 </div>
+            </section>
 
-                <div class="timeline-item">
-                    <div class="timeline-company">Fraunhofer USA CESE</div>
-                    <div class="timeline-role">Research Scientist</div>
-                    <div class="timeline-meta">Jul 2017 &ndash; Feb 2018 &middot; 8 mos &middot; Maryland</div>
-                    <div class="timeline-desc">
-                        <ul>
-                            <li>Designed vehicle detection systems using YOLOnet with collision prediction via OpenCV and Keras</li>
-                            <li>Developed path planning algorithms for highway lane changing in C++</li>
-                            <li>Modelled factory throughput as an optimization problem in Python</li>
-                        </ul>
-                    </div>
+            <section>
+                <h2>Skills</h2>
+                <div class="skills-grid">
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">C++</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Autonomous Vehicles</span>
+                    <span class="skill-tag">Computer Vision</span>
+                    <span class="skill-tag">LiDAR</span>
+                    <span class="skill-tag">Robotics</span>
+                    <span class="skill-tag">Localization</span>
+                    <span class="skill-tag">Path Planning</span>
+                    <span class="skill-tag">Sensor Fusion</span>
+                    <span class="skill-tag">Control Systems</span>
+                    <span class="skill-tag">Embedded C</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">Keras</span>
+                    <span class="skill-tag">OpenCV</span>
                 </div>
+            </section>
+        </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-company">GreyOrange</div>
-                    <div class="timeline-role">Hardware R&amp;D Engineer</div>
-                    <div class="timeline-meta">May 2015 &ndash; May 2016 &middot; 1 yr 1 mo &middot; Gurugram, India</div>
-                    <div class="timeline-desc">
-                        <ul>
-                            <li>Built a modular charging system from scratch (PCB &amp; assembly), solving static discharge and EMI issues across international deployments</li>
-                            <li>Designed the full harness assembly for the Butler robot platform; reduced harness failure rate from 50% to 5%</li>
-                            <li>Maintained embedded C firmware for charging and power scheduling systems</li>
-                        </ul>
-                    </div>
+        <div id="tab-blog" class="tab-content">
+            <section>
+                <h2>Blog</h2>
+                <div class="placeholder-section">
+                    <div class="placeholder-title">Coming soon</div>
+                    Thoughts on ML, robotics, and building autonomous systems.
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <section id="education">
-            <h2>Education</h2>
-            <div class="education-item">
-                <h3>M.S. Robotics</h3>
-                <div class="school">University of Maryland, College Park</div>
-                <div class="details">
-                    2016 &ndash; 2018 &middot; GPA: 3.87 / 4.0<br>
-                    Coursework in numerical optimization, robotics control, machine learning, path planning, and perception for autonomous robots.
+        <div id="tab-talks" class="tab-content">
+            <section>
+                <h2>Talks</h2>
+                <div class="placeholder-section">
+                    <div class="placeholder-title">Coming soon</div>
+                    Conference talks and presentations.
                 </div>
-            </div>
-            <div class="education-item">
-                <h3>B.E. (Hons) Electronics &amp; Instrumentation</h3>
-                <div class="school">BITS Pilani</div>
-                <div class="details">
-                    2011 &ndash; 2015 &middot; First Division<br>
-                    Focus on electro-mechanical systems, control systems, robot manipulation, and joint control of robotic arms.
+            </section>
+        </div>
+
+        <div id="tab-publications" class="tab-content">
+            <section>
+                <h2>Patents</h2>
+                <div class="patent-item">
+                    <a href="https://patents.google.com/patent/US12566069B2/en" class="patent-title" target="_blank" rel="noopener">Localizing vehicles using retroreflective surfaces</a>
+                    <div class="patent-meta">US12566069B2 &middot; Issued Mar 3, 2026</div>
+                    <p class="patent-desc">A method for localizing a vehicle by matching retroreflective features from vehicle sensor data against a digital map of vectorized retroreflective feature data, scoring each feature match, and determining vehicle position.</p>
                 </div>
-            </div>
-        </section>
+                <div class="patent-item">
+                    <a href="https://patents.google.com/patent/US12468306B2/en" class="patent-title" target="_blank" rel="noopener">Detection and mapping of generalized retroreflective surfaces</a>
+                    <div class="patent-meta">US12468306B2 &middot; Issued Nov 11, 2025</div>
+                    <p class="patent-desc">A method for detecting and vectorizing retroreflective features near roadways using vehicle sensors, generating a digital map with their locations, and executing a localization protocol to identify a second vehicle's position using that map.</p>
+                </div>
+            </section>
 
-        <section>
-            <h2>Skills</h2>
-            <div class="skills-grid">
-                <span class="skill-tag">Machine Learning</span>
-                <span class="skill-tag">C++</span>
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">Autonomous Vehicles</span>
-                <span class="skill-tag">Computer Vision</span>
-                <span class="skill-tag">LiDAR</span>
-                <span class="skill-tag">Robotics</span>
-                <span class="skill-tag">Localization</span>
-                <span class="skill-tag">Path Planning</span>
-                <span class="skill-tag">Sensor Fusion</span>
-                <span class="skill-tag">Control Systems</span>
-                <span class="skill-tag">Embedded C</span>
-                <span class="skill-tag">TensorFlow</span>
-                <span class="skill-tag">Keras</span>
-                <span class="skill-tag">OpenCV</span>
-            </div>
-        </section>
-
-        <section id="blog">
-            <h2>Blog</h2>
-            <div class="placeholder-section">
-                <div class="placeholder-title">Coming soon</div>
-                Thoughts on ML, robotics, and building autonomous systems.
-            </div>
-        </section>
-
-        <section id="talks">
-            <h2>Talks</h2>
-            <div class="placeholder-section">
-                <div class="placeholder-title">Coming soon</div>
-                Conference talks and presentations.
-            </div>
-        </section>
-
-        <section id="publications">
-            <h2>Publications</h2>
-            <div class="placeholder-section">
-                <div class="placeholder-title">Coming soon</div>
-                Research papers and technical writing.
-            </div>
-        </section>
-
+            <section>
+                <h2>Papers</h2>
+                <div class="placeholder-section">
+                    <div class="placeholder-title">Coming soon</div>
+                    Research papers and technical writing.
+                </div>
+            </section>
+        </div>
         <footer>
-            <span>&copy; 2026 Karan Bhargava</span>
+            <span>&copy; 2026 Karan Vivek Bhargava</span>
             <div class="footer-links">
                 <a href="https://www.linkedin.com/in/karanbhargava93/" target="_blank" rel="noopener">LinkedIn</a>
                 <a href="https://github.com/karanvivekbhargava" target="_blank" rel="noopener">GitHub</a>
@@ -495,5 +601,70 @@
             </div>
         </footer>
     </div>
+    <script>
+        function formatDuration(startStr, endStr) {
+            const [sy, sm] = startStr.split('-').map(Number);
+            const start = new Date(sy, sm - 1);
+            const end = endStr === 'present' ? new Date() : (() => { const [ey, em] = endStr.split('-').map(Number); return new Date(ey, em - 1); })();
+            let months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+            if (months < 0) months = 0;
+            const yrs = Math.floor(months / 12);
+            const mos = months % 12;
+            const parts = [];
+            if (yrs > 0) parts.push(yrs + (yrs === 1 ? ' yr' : ' yrs'));
+            if (mos > 0) parts.push(mos + (mos === 1 ? ' mo' : ' mos'));
+            return parts.join(' ') || '< 1 mo';
+        }
+
+        document.querySelectorAll('[data-duration]').forEach(el => {
+            el.textContent = formatDuration(el.dataset.start, el.dataset.end);
+        });
+
+        document.querySelectorAll('.timeline-tenure').forEach(el => {
+            el.textContent = '· ' + formatDuration(el.dataset.start, el.dataset.end);
+        });
+
+        function switchTab(tabName, scrollTo) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+
+            document.querySelector('.hero').style.display = tabName === 'home' ? '' : 'none';
+
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.classList.toggle('active', a.dataset.tab === tabName && !a.dataset.scroll);
+            });
+
+            if (scrollTo) {
+                const el = document.getElementById(scrollTo);
+                if (el) {
+                    setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 50);
+                    return;
+                }
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('[data-tab]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const tab = a.dataset.tab;
+                const scroll = a.dataset.scroll || null;
+                history.pushState(null, '', tab === 'home' ? (scroll ? '#' + scroll : '#') : '#' + tab);
+                switchTab(tab, scroll);
+            });
+        });
+
+        function handleHash() {
+            const hash = location.hash.replace('#', '');
+            if (!hash || hash === '' || ['experience', 'education'].includes(hash)) {
+                switchTab('home', hash || null);
+            } else if (['blog', 'talks', 'publications'].includes(hash)) {
+                switchTab(hash);
+            }
+        }
+
+        window.addEventListener('popstate', handleHash);
+        if (location.hash) handleHash();
+    </script>
 </body>
 </html>
